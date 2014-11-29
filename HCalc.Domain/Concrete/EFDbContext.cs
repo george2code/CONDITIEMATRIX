@@ -11,5 +11,6 @@ namespace HCalc.Domain.Concrete
         public DbSet<DefectIntencity> DefectIntencities { get; set; }
         public DbSet<DefectImportance> DefectImportances { get; set; }
         public DbSet<Action> Actions { get; set; }
+        public DbSet<Matrix> Matrices { get; set; }
     }
 }

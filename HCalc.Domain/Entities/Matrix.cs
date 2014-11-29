@@ -20,5 +20,6 @@ namespace HCalc.Domain.Entities
         public int BTW { get; set; }
         public int Cycle { get; set; }
         public int StartYear { get; set; }
+        public Nullable<DateTime> UpdatedDate { get; set; }
     }
 }

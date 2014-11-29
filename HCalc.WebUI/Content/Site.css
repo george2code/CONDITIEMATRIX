@@ -45,3 +45,16 @@ input[type="checkbox"].input-validation-error {
 
 .conditiematrix { width: 100%;margin-bottom: 50px;margin-top: 40px;}
 .conditiematrix td { border: 1px solid #cccccc; padding: 3px 5px; font-weight: bold;}
+
+.panel_calendar { margin-top: 50px;}
+
+ul.calendar { list-style-type: none;padding-left: 20px;}
+ul.calendar li { margin-bottom: 5px;}
+
+table.matrix { font-size: 12px;margin: 20px 0 50px 0;}
+table.matrix th { text-align: center;}
+table.matrix th,
+table.matrix td { border: 1px solid #cccccc;padding: 3px 5px;}
+
+table.matrix .gr { background-color: greenyellow;}
+table.matrix .yl { background-color: orange;}

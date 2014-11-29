@@ -34,6 +34,8 @@ namespace HCalc.WebUI.Infrastructure
             kernel.Bind<IDefectIntencityRepository>().To<EFDefectIntencityRepository>();
 
             kernel.Bind<IActionRepository>().To<EFActionRepository>();
+
+            kernel.Bind<IMatrixRepository>().To<EFMatrixRepository>();
         }
     }
 }

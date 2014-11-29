@@ -10,11 +10,11 @@ namespace HCalc.WebUI.Models
     public class CalcViewModel
     {
         [Display(Name = "Bouwdeel / onderdeel")]
-        public int BuildingPartsId { get; set; }
+        public Nullable<int> BuildingPartsId { get; set; }
         public IEnumerable<BuildingPart> Parts { get; set; }
 
         [Display(Name = "Gebrek")]
-        public int DefectDescriptionsId { get; set; }
+        public Nullable<int> DefectDescriptionsId { get; set; }
         public IEnumerable<DefectDescription> DefectDescriptions { get; set; }
 
 
@@ -32,7 +32,7 @@ namespace HCalc.WebUI.Models
         public IEnumerable<DefectExtent> DefectExtents { get; set; }
 
         [Display(Name = "Actie")]
-        public int ActionId { get; set; }
+        public Nullable<int> ActionId { get; set; }
         public IEnumerable<Action> Actions { get; set; }
 
         [Display(Name = "Eenh")]

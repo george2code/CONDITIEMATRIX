@@ -180,6 +180,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Page\Index.cshtml" />
+    <Content Include="Views\Page\Add.cshtml" />
+    <Content Include="Views\Shared\Partial\_Reminder.cshtml" />
+    <Content Include="Views\Page\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HCalc.Domain\HCalc.Domain.csproj">

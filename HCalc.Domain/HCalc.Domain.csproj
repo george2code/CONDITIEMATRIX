@@ -54,6 +54,7 @@
     <Compile Include="Abstract\IDefectExtentRepository.cs" />
     <Compile Include="Abstract\IDefectImportanceRepository.cs" />
     <Compile Include="Abstract\IDefectIntencityRepository.cs" />
+    <Compile Include="Abstract\IMatrixRepository.cs" />
     <Compile Include="Concrete\EFActionRepository.cs" />
     <Compile Include="Concrete\EFBuildingPartRepository.cs" />
     <Compile Include="Concrete\EFDbContext.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Concrete\EFDefectExtentRepository.cs" />
     <Compile Include="Concrete\EFDefectImportanceRepository.cs" />
     <Compile Include="Concrete\EFDefectIntencityRepository.cs" />
+    <Compile Include="Concrete\EFMatrixRepository.cs" />
     <Compile Include="Entities\Action.cs" />
     <Compile Include="Entities\BuildingPart.cs" />
     <Compile Include="Entities\DefectDescription.cs" />
@@ -91,6 +93,10 @@
     <Compile Include="Migrations\201411280844585_Actions.Designer.cs">
       <DependentUpon>201411280844585_Actions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201411291602145_Matrices.cs" />
+    <Compile Include="Migrations\201411291602145_Matrices.Designer.cs">
+      <DependentUpon>201411291602145_Matrices.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -113,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201411280844585_Actions.resx">
       <DependentUpon>201411280844585_Actions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411291602145_Matrices.resx">
+      <DependentUpon>201411291602145_Matrices.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

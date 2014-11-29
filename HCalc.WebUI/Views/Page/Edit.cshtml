@@ -1,0 +1,257 @@
+﻿@model HCalc.WebUI.Models.CalcViewModel
+
+@{
+    ViewBag.Title = "Add Conditiematrix";
+}
+
+
+@Html.Partial("~/Views/Shared/Partial/_Reminder.cshtml");
+
+
+
+@using (Html.BeginForm("Edit", "Page", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.BuildingPartsId, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(model => model.BuildingPartsId, new SelectList(Model.Parts, "Id", "Name"), "- Building parts -", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.DefectDescriptionsId, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(model => model.DefectDescriptionsId, new SelectList(Model.DefectDescriptions, "Id", "Description"), "- Defect description -", new { @class = "form-control" })
+                </div>
+            </div>
+
+            <hr />
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DefectImportancesId, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(model => model.DefectImportancesId, new SelectList(Model.DefectImportances, "Id", "ImportanceName"), "- Gebr -", new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DefectIntencitiesId, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(model => model.DefectIntencitiesId, new SelectList(Model.DefectIntencities, "Id", "IntencityName"), "- Int -", new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DefectExtentsId, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(model => model.DefectExtentsId, new SelectList(Model.DefectExtents, "Id", "ExtentName"), "- OMVANG -", new { @class = "form-control" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="Cond" class="col-sm-4 control-label text-primary">Condition</label>
+                <div class="col-sm-8">
+                    <p id="Cond" class="condition form-control-static text-primary">-</p>
+                    @Html.HiddenFor(model => model.Condition)
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ActionId, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(model => model.ActionId, new SelectList(Model.Actions, "Id", "Name"), "- Action -", new { @class = "form-control" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Hvh, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(m => m.Hvh)
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EenhId, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(model => model.EenhId, Model.EenhList, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Percent, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(model => model.Percent, new SelectList(
+                        new List<Object>
+                        {
+                            new {value = 0, text = "1"},
+                            new {value = 1, text = "0,2"}
+                        },
+                        "value",
+                        "text",
+                        0), new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Cost, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(m => Model.Cost, new { @class = "form-control", @placeholder = "€" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Total, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    <p id="TotalCost" class="total form-control-static">-</p>
+                    @Html.HiddenFor(model => model.Total)
+                </div>
+            </div>
+        </div><!-- End Left -->
+        <!-- Right -->
+        <div class="col-sm-6">
+            <div class="form-group">
+                @Html.LabelFor(model => model.TaxeId, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(model => model.TaxeId, Model.TaxeList, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Cycle, new { @class = "col-sm-4 control-label" })
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(model => model.Cycle, new SelectList(
+                        new List<Object>
+                        {
+                            new {value = 1, text = "1"},
+                            new {value = 2, text = "2"},
+                            new {value = 3, text = "3"},
+                            new {value = 4, text = "4"},
+                            new {value = 5, text = "5"},
+                            new {value = 6, text = "6"},
+                            new {value = 99, text = "99"}
+                        },
+                        "value",
+                        "text",
+                        0), new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.StartDate, new { @class = "col-sm-4 control-label" })
+                <div class='col-sm-6'>
+                    <div class="input-append date input-group" id="dpYears" data-date="102/2014" data-date-format=" yyyy" data-date-viewmode="years" data-date-minviewmode="years">
+                        @Html.TextBoxFor(m => m.StartDate, new { @class = "span2 form-control", @size = "16", @value = "2014" })
+                        <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel_calendar panel panel-default col-lg-offset-4">
+                <div class="panel-heading">Calendar</div>
+                <div class="panel-body">
+                    <ul class="calendar"></ul>
+                </div>
+            </div>
+
+        </div><!-- End right -->
+    </div>
+    <!--End row -->
+
+
+    <div class="row">
+        <hr />
+        <div class="form-group">
+            <div class="col-sm-12 text-center">
+                <button type="submit" class="btn btn-success btn-lg">Submit</button>
+                <button type="button" class="btn btn-warning btn-lg col-lg-offset-1" onclick="window.location = '/';">Back to List</button>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // check condition on page load
+
+
+
+        // get condition
+        $("#DefectImportancesId, #DefectIntencitiesId, #DefectExtentsId").change(function () {
+            if ($("#DefectImportancesId").val() != "" && $("#DefectIntencitiesId").val() != "" && $("#DefectExtentsId").val() != "") {
+                var url = "/Page/GetCondition";
+
+                $.get(url, {
+                    extent: $("#DefectExtentsId").val(),
+                    intencity: $("#DefectIntencitiesId").val(),
+                    importance: $("#DefectImportancesId").val()
+                }, function (data) {
+                    $("#Cond").html(data);
+                    $("#Condition").val(data);
+                });
+            } else {
+                $("#Cond").html("-");
+                $("#Condition").val(0);
+            }
+        });
+
+        // get Total without taxes
+        $("#Hvh, #Percent, #Cost").change(function () {
+            if ($("#Hvh").val() != "0" && $("#Cost").val() != "0") {
+                var url = "/Page/GetTotalCost";
+
+                $.get(url, {
+                    count: $("#Hvh").val(),
+                    percentId: $("#Percent").val(),
+                    cost: $("#Cost").val()
+                }, function (data) {
+                    $("#TotalCost").html(data + " &euro;");
+                    $("#Total").val(data);
+                });
+            } else {
+                $("#TotalCost").html("-");
+                $("#Total").val(0);
+            }
+        });
+
+
+        $('#dpYears').datepicker().on('changeDate', function (ev) {
+
+            $(".dropdown-menu").hide();
+
+            if ($("#Total").val() != "0") {
+                var url = "/Page/GetCalendarCostList";
+
+                $.get(url, {
+                    total: $("#Total").val(),
+                    taxe: $("#TaxeId").val(),
+                    cycle: $("#Cycle").val(),
+                    year: ev.date.getFullYear()
+                }, function (data) {
+                    $("ul.calendar").html(data);
+                });
+            }
+        });
+
+
+        // get calendar
+        $("#Total, #TaxeId, #Cycle, #StartDate").change(function () {
+            // Total - 0
+            // StartDate - get year
+
+            var date = $(this).datepicker('getDate');
+            alert(date);
+        });
+
+    });
+</script>

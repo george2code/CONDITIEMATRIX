@@ -1,331 +1,93 @@
-﻿@using Microsoft.SqlServer.Server
-@model HCalc.WebUI.Models.CalcViewModel
-
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "Welcome";
 }
-
 
 <div class="row">
     <div class="col-sm-12">
-        <table class="conditiematrix">
-            <tr>
-                <td colspan="18">CONDITIEMATRIX</td>
-            </tr>
-            <tr>
-                <td rowspan="3">DEFECT</td>
-                <td class="text-danger">CRITICAL</td>
-                <td>&nbsp;</td>
-                <td colspan="15">OMVANG</td>
-            </tr>
-            <tr>
-                <td class="text-primary">SERIOUS</td>
-                <td>&nbsp;</td>
-                <td colspan="3" rowspan="2">Incidentically<br />< 2%</td>
-                <td colspan="3" rowspan="2">Locally<br />2-10%</td>
-                <td colspan="3" rowspan="2">Regularly<br />10-30%</td>
-                <td colspan="3" rowspan="2">Frequently<br />30-70%</td>
-                <td colspan="3" rowspan="2">Generally<br />>70%</td>
-            </tr>
-            <tr>
-                <td class="text-success">MINOR</td>
-                <td>&nbsp;</td>
-            </tr>
-            <!-- body -->
-            <tr>
-                <td colspan="2">INTENSITEIT</td>
-                <td>&nbsp;</td>
-                <td colspan="3" class="text-center">1</td>
-                <td colspan="3" class="text-center">2</td>
-                <td colspan="3" class="text-center">3</td>
-                <td colspan="3" class="text-center">4</td>
-                <td colspan="3" class="text-center">5</td>
-            </tr>
-            <tr>
-                <td colspan="2">low (begin)</td>
-                <td class="text-center">1</td>
-                <td class="text-center text-danger">1</td>
-                <td class="text-center text-primary">1</td>
-                <td class="text-center text-success">1</td>
-                
-                <td class="text-center text-danger">1</td>
-                <td class="text-center text-primary">1</td>
-                <td class="text-center text-success">1</td>
-                
-                <td class="text-center text-danger">2</td>
-                <td class="text-center text-primary">1</td>
-                <td class="text-center text-success">1</td>
-                
-                <td class="text-center text-danger">3</td>
-                <td class="text-center text-primary">2</td>
-                <td class="text-center text-success">1</td>
-                
-                <td class="text-center text-danger">4</td>
-                <td class="text-center text-primary">3</td>
-                <td class="text-center text-success">2</td>
-            </tr>
-            
-            <tr>
-                <td colspan="2">middle</td>
-                <td class="text-center">2</td>
-                <td class="text-center text-danger">1</td>
-                <td class="text-center text-primary">1</td>
-                <td class="text-center text-success">1</td>
+        <br />
+        <nav role="navigation" class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button data-target="#bs-example-navbar-collapse-3" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="#" class="navbar-brand">Demo version</a>
+                </div>
+                <div id="bs-example-navbar-collapse-3" class="collapse navbar-collapse pull-right">
+                    <button class="btn btn-primary navbar-btn" type="button" onclick="window.location = '/Page/Add';">Add new</button>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="table-responsive">
+            <table class="matrix table table-hover">
+                <tr>
+                    <th>Code</th>
+                    <th style="width: 280px;">Bouwdeel / onderdeel</th>
+                    <th>Gebrek</th>
+                    <th class="gr">Gebr</th>
+                    <th class="gr">Int</th>
+                    <th class="gr">Omv</th>
+                    <th class="yl">Con</th>
+                    <th class="gr">Actie</th>
+                    <th class="gr">Hvh</th>
+                    <th>Eenh</th>
+                    <th>%</th>
+                    <th class="yl">Kosten</th>
+                    <th>Total</th>
+                    <th>Cycl</th>
+                    <th>Startjaar</th>
+                    <th>BTW</th>
 
-                <td class="text-center text-danger">2</td>
-                <td class="text-center text-primary">1</td>
-                <td class="text-center text-success">1</td>
+                    <th class="yl">2012</th>
+                    <th class="yl">2013</th>
+                    <th class="yl">2014</th>
+                </tr>
 
-                <td class="text-center text-danger">3</td>
-                <td class="text-center text-primary">2</td>
-                <td class="text-center text-success">1</td>
-
-                <td class="text-center text-danger">4</td>
-                <td class="text-center text-primary">3</td>
-                <td class="text-center text-success">2</td>
-
-                <td class="text-center text-danger">5</td>
-                <td class="text-center text-primary">4</td>
-                <td class="text-center text-success">3</td>
-            </tr>
-            
-            <tr>
-                <td colspan="2">high (end)</td>
-                <td class="text-center">3</td>
-                <td class="text-center text-danger">2</td>
-                <td class="text-center text-primary">1</td>
-                <td class="text-center text-success">1</td>
-
-                <td class="text-center text-danger">3</td>
-                <td class="text-center text-primary">2</td>
-                <td class="text-center text-success">1</td>
-
-                <td class="text-center text-danger">4</td>
-                <td class="text-center text-primary">3</td>
-                <td class="text-center text-success">2</td>
-
-                <td class="text-center text-danger">5</td>
-                <td class="text-center text-primary">4</td>
-                <td class="text-center text-success">3</td>
-
-                <td class="text-center text-danger">6</td>
-                <td class="text-center text-primary">5</td>
-                <td class="text-center text-success">4</td>
-            </tr>
-        </table>
+                @for (var i = 0; i < 10; i++)
+                {
+                    <tr>
+                        <td>31.39</td>
+                        <td>Dakaansluiting; loodslab tpv gevel en dakkapel</td>
+                        <td>Roestvorming bouten droogrekken</td>
+                        <td class="gr text-center">5</td>
+                        <td class="gr text-center">2</td>
+                        <td class="gr text-center">2</td>
+                        <td class="yl text-center">2</td>
+                        <td class="gr">Onderhoud bevestiging</td>
+                        <td class="gr text-center">23</td>
+                        <td class="text-center">m2</td>
+                        <td class="text-center">1</td>
+                        <td class="yl text-center">&euro; 30</td>
+                        <td class="text-center">&euro; 690</td>
+                        <td class="text-center">3</td>
+                        <td class="text-center">2014</td>
+                        <td class="text-center">19</td>
+                        <td class="yl text-center">2012</td>
+                        <td class="yl text-center"></td>
+                        <td class="yl text-center"></td>
+                    </tr>
+                }
+            </table>
+        </div>
     </div>
 </div>
 
-<form class="form-horizontal" role="form">
-    
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="form-group">
-                @Html.LabelFor(model => model.BuildingPartsId, new { @class = "col-sm-4 control-label" })
-                <div class="col-sm-8">
-                    @Html.DropDownListFor(model => model.BuildingPartsId, new SelectList(Model.Parts, "Id", "Name"), "- Building parts -", new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.DefectDescriptionsId, new { @class = "col-sm-4 control-label" })
-                <div class="col-sm-8">
-                    @Html.DropDownListFor(model => model.DefectDescriptionsId, new SelectList(Model.DefectDescriptions, "Id", "Description"), "- Defect description -", new { @class = "form-control" })
-                </div>
-            </div>
-
-            <hr />
-        
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.DefectImportancesId, new { @class = "col-sm-4 control-label" })
-                <div class="col-sm-8">
-                    @Html.DropDownListFor(model => model.DefectImportancesId, new SelectList(Model.DefectImportances, "Id", "ImportanceName"), "- Gebr -", new { @class = "form-control" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.DefectIntencitiesId, new { @class = "col-sm-4 control-label" })
-                <div class="col-sm-8">
-                    @Html.DropDownListFor(model => model.DefectIntencitiesId, new SelectList(Model.DefectIntencities, "Id", "IntencityName"), "- Int -", new { @class = "form-control" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.DefectExtentsId, new { @class = "col-sm-4 control-label" })
-                <div class="col-sm-8">
-                    @Html.DropDownListFor(model => model.DefectExtentsId, new SelectList(Model.DefectExtents, "Id", "ExtentName"), "- OMVANG -", new { @class = "form-control" })
-                </div>
-            </div>
-        
-
-            <div class="form-group">
-                <label for="Cond" class="col-sm-4 control-label text-primary">Condition</label>
-                <div class="col-sm-8">
-                    <p id="Cond" class="condition form-control-static text-primary">-</p>
-                    @Html.HiddenFor(model => model.Condition)
-                </div>
-            </div>
-
-            <hr />
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ActionId, new { @class = "col-sm-4 control-label" })
-                <div class="col-sm-8">
-                    @Html.DropDownListFor(model => model.ActionId, new SelectList(Model.Actions, "Id", "Name"), "- Action -", new { @class = "form-control" })
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Hvh, new { @class = "col-sm-4 control-label" })
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(m => m.Hvh)
-                </div>
-            </div>
-
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.EenhId, new { @class = "col-sm-4 control-label" })
-                <div class="col-sm-8">
-                    @Html.DropDownListFor(model => model.EenhId, Model.EenhList, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Percent, new { @class = "col-sm-4 control-label" })
-                <div class="col-sm-8">
-                    @Html.DropDownListFor(model => model.Percent, new SelectList(
-                        new List<Object>{
-                            new { value = 0 , text = "1"  },
-                            new { value = 1 , text = "0,2" }
-                        },
-                        "value",
-                        "text",
-                        0), new { @class = "form-control" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Cost, new { @class = "col-sm-4 control-label" })
-                <div class="col-sm-8">
-                    @Html.TextBoxFor(m => Model.Cost, new { @class = "form-control", @placeholder = "€" })
-                </div>
-            </div>
-           
-        
-            <div class="form-group">
-                @Html.LabelFor(model => model.Total, new { @class = "col-sm-4 control-label" })
-                <div class="col-sm-8">
-                    <p id="TotalCost" class="total form-control-static">-</p>
-                    @Html.HiddenFor(model => model.Total)
-                </div>
-            </div>
-        </div><!-- End Left -->
-        
-
-        <!-- Right -->
-        <div class="col-sm-6">
-            <div class="form-group">
-                @Html.LabelFor(model => model.TaxeId, new { @class = "col-sm-4 control-label" })
-                <div class="col-sm-8">
-                    @Html.DropDownListFor(model => model.TaxeId, Model.TaxeList, new { @class = "form-control" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Cycle, new { @class = "col-sm-4 control-label" })
-                <div class="col-sm-8">
-                    @Html.DropDownListFor(model => model.Cycle, new SelectList(
-                        new List<Object>{
-                            new { value = 1 , text = "1" },
-                            new { value = 2 , text = "2" },
-                            new { value = 3 , text = "3" },
-                            new { value = 4 , text = "4" },
-                            new { value = 5 , text = "5" },
-                            new { value = 6 , text = "6" },
-                            new { value = 99 , text = "99" }
-                        },
-                        "value",
-                        "text",
-                        0), new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.StartDate, new { @class = "col-sm-4 control-label" })
-                <div class='col-sm-6'>
-                    <div class='input-group date' id='datetimepicker5'>
-                        @Html.TextBoxFor(m => m.StartDate, new { @class = "form-control" })
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!--End row -->
-    
-    
-    <div class="row">
-        <hr />
-        <div class="form-group">
-            <div class="col-sm-12 text-center">
-                <button type="submit" class="btn btn-success btn-lg">Submit</button>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-sm-12">
+        <nav>
+            <ul class="pagination pull-right">
+                <li><a href="#"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li><a href="#"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
+            </ul>
+        </nav>
     </div>
-   
-</form>
-
-
-
-<script type="text/javascript">
-    $(document).ready(function () {
-
-
-        // check condition on page load
-
-
-
-        // get condition
-        $("#DefectImportancesId, #DefectIntencitiesId, #DefectExtentsId").change(function ()
-        {
-            if ($("#DefectImportancesId").val() != "" && $("#DefectIntencitiesId").val() != "" && $("#DefectExtentsId").val() != "")
-            {
-                var url = "/Page/GetCondition";
-
-                $.get(url, {
-                    extent: $("#DefectExtentsId").val(),
-                    intencity: $("#DefectIntencitiesId").val(),
-                    importance: $("#DefectImportancesId").val()
-                }, function (data) {
-                    $("#Cond").html(data);
-                    $("#Condition").val(data);
-                });
-            } else {
-                $("#Cond").html("-");
-                $("#Condition").val(0);
-            }
-        });
-
-        // get Total without taxes
-        $("#Hvh, #Percent, #Cost").change(function ()
-        {
-            if ($("#Hvh").val() != "0" && $("#Cost").val() != "0")
-            {
-                var url = "/Page/GetTotalCost";
-
-                $.get(url, {
-                    count: $("#Hvh").val(),
-                    percentId: $("#Percent").val(),
-                    cost: $("#Cost").val()
-                }, function (data) {
-                    $("#TotalCost").html(data);
-                    $("#Total").val(data);
-                });
-            } else {
-                $("#TotalCost").html("-");
-                $("#Total").val(data);
-            }
-        });
-
-    });
-</script>
+</div>
