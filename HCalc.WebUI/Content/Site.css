@@ -58,3 +58,8 @@ table.matrix td { border: 1px solid #cccccc;padding: 3px 5px;}
 
 table.matrix .gr { background-color: greenyellow;}
 table.matrix .yl { background-color: orange;}
+
+table.matrix td a.delete { width: 24px; height: 24px;background: url("../images/ico_delete.png") no-repeat;display: inline-block;outline: none;}
+table.matrix td.vam { vertical-align: middle;}
+
+.btncalendar { width: 24px;height: 24px;background: url("../images/ico_calendar.png") no-repeat 0 0; display: inline-block; outline: none; }

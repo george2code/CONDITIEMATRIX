@@ -97,6 +97,10 @@
     <Compile Include="Migrations\201411291602145_Matrices.Designer.cs">
       <DependentUpon>201411291602145_Matrices.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201411291829555_matrix_update.cs" />
+    <Compile Include="Migrations\201411291829555_matrix_update.Designer.cs">
+      <DependentUpon>201411291829555_matrix_update.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -122,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201411291602145_Matrices.resx">
       <DependentUpon>201411291602145_Matrices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411291829555_matrix_update.resx">
+      <DependentUpon>201411291829555_matrix_update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

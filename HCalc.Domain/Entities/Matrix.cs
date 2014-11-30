@@ -14,7 +14,7 @@ namespace HCalc.Domain.Entities
         public Nullable<int> ActieId { get; set; }
         public int HvhId { get; set; }
         public int EenhId { get; set; }
-        public float Percent { get; set; }
+        public float? Percent { get; set; }
         public int Cost { get; set; }
         public Nullable<int> Total { get; set; }
         public int BTW { get; set; }

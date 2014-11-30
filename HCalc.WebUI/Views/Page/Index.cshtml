@@ -41,17 +41,15 @@
                     <th>Cycl</th>
                     <th>Startjaar</th>
                     <th>BTW</th>
-
-                    <th class="yl">2012</th>
-                    <th class="yl">2013</th>
-                    <th class="yl">2014</th>
+                    <th>Cal</th>
+                    <th></th>
                 </tr>
 
                 @for (var i = 0; i < 10; i++)
                 {
                     <tr>
-                        <td>31.39</td>
-                        <td>Dakaansluiting; loodslab tpv gevel en dakkapel</td>
+                        <td class="vam"><span class="label label-success">31.39</span></td>
+                        <td class="vam"><a href="/page/edit/1">Dakaansluiting; loodslab tpv gevel en dakkapel</a></td>
                         <td>Roestvorming bouten droogrekken</td>
                         <td class="gr text-center">5</td>
                         <td class="gr text-center">2</td>
@@ -66,9 +64,12 @@
                         <td class="text-center">3</td>
                         <td class="text-center">2014</td>
                         <td class="text-center">19</td>
-                        <td class="yl text-center">2012</td>
-                        <td class="yl text-center"></td>
-                        <td class="yl text-center"></td>
+                        <td class="vam">
+                            <a href="javascript:void(0);" class="btncalendar" data-toggle="popover" title="Years cost"
+                               data-placement="left"
+                               data-content="2014 - &euro;1600, 2017 - &euro;1600"></a>
+                        </td>
+                        <td class="text-center vam"><a class="delete" href="#" title="Remove" data-toggle="modal" data-target="#myModal"></a></td>
                     </tr>
                 }
             </table>
@@ -91,3 +92,41 @@
         </nav>
     </div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Remove matrix item</h4>
+            </div>
+            <div class="modal-body">
+                Are your sure you want to remove this matrix item? Press 'Delete' to apply, 'Close' - to cancel.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $(".matrix td a.delete").bind("click", function(event) {
+            event.preventDefault();
+        });
+
+        $("#myModal .btn-danger").bind("click", function(event) {
+            location.reload();
+        });
+
+        $('[data-toggle="popover"]').popover();
+
+    });
+</script>

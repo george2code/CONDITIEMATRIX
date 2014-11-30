@@ -125,7 +125,7 @@ namespace HCalc.WebUI.Controllers
                 //TODO: check that all params has been assigned
                 model.EenhId = matrix.EenhId;
                 model.TaxeId = matrix.BTW;
-                model.StartDate = new DateTime(matrix.StartYear, 1, 1);
+                model.StartDate = new DateTime(matrix.StartYear, DateTime.Now.Month, 1);
 
                 return View(model);
             }
