@@ -3,31 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
-using HCalc.Domain.Abstract;
+using HCalc.Domain;
+using HCalc.Domain.Concrete;
+using HCalc.Domain.Contract;
 using HCalc.Domain.Entities;
 using HCalc.Domain.Enums;
 using HCalc.Domain.Logic;
 using HCalc.WebUI.Models;
-using Ninject;
 
 namespace HCalc.WebUI.Controllers
 {
-    public class PageController : Controller
+    [Authorize]
+    public class PageController : BaseController
     {
         #region Fields 
 
         private ConditionBuilder _conditionBuilder;
 
-        private IBuildingPartRepository _buildingPartRepository;
-        private IDefectDescriptionRepository _defectDescriptionRepository;
+        private BuildingPartRepository _buildingPartRepository;
+        private DefectDescriptionRepository _defectDescriptionRepository;
 
-        private IDefectImportanceRepository _defectImportanceRepository;
-        private IDefectIntencityRepository _defectIntencityRepository;
-        private IDefectExtentRepository _defectExtentRepository;
+        private DefectImportanceRepository _defectImportanceRepository;
+        private DefectIntencityRepository _defectIntencityRepository;
+        private DefectExtentRepository _defectExtentRepository;
 
-        private IActionRepository _actionRepository;
+        private ActionRepository _actionRepository;
 
-        private IMatrixRepository _matrixRepository;
+        private MatrixRepository _matrixRepository;
 
         #endregion
 
@@ -42,22 +44,19 @@ namespace HCalc.WebUI.Controllers
 
         #region Constructor
 
-        [Inject]
-        public PageController(IBuildingPartRepository buildingPartRepository, 
-            IDefectDescriptionRepository defectDescriptionRepository,
-            IDefectImportanceRepository defectImportanceRepository,
-            IDefectIntencityRepository defectIntencityRepository,
-            IDefectExtentRepository defectExtentRepository,
-            IActionRepository actionRepository,
-            IMatrixRepository matrixRepository)
+        private IUnitOfWork uow = null;
+
+        public PageController()
         {
-            _buildingPartRepository = buildingPartRepository;
-            _defectDescriptionRepository = defectDescriptionRepository;
-            _defectImportanceRepository = defectImportanceRepository;
-            _defectIntencityRepository = defectIntencityRepository;
-            _defectExtentRepository = defectExtentRepository;
-            _actionRepository = actionRepository;
-            _matrixRepository = matrixRepository;
+            uow = new UnitOfWork();
+
+            _buildingPartRepository = new BuildingPartRepository(uow);
+            _defectDescriptionRepository = new DefectDescriptionRepository(uow);
+            _defectImportanceRepository = new DefectImportanceRepository(uow);
+            _defectIntencityRepository = new DefectIntencityRepository(uow);
+            _defectExtentRepository = new DefectExtentRepository(uow);
+            _actionRepository = new ActionRepository(uow);
+            _matrixRepository = new MatrixRepository(uow);
         }
 
         #endregion
@@ -100,7 +99,7 @@ namespace HCalc.WebUI.Controllers
             };
 
              // insert
-             _matrixRepository.Add(newItem);
+             _matrixRepository.Insert(newItem);
 
              // redirect
              return RedirectToAction("Index", "Page");
@@ -109,7 +108,7 @@ namespace HCalc.WebUI.Controllers
 
         public ActionResult Edit(int id)
         {
-            var matrix = _matrixRepository.GetById(id);
+            var matrix = _matrixRepository.SingleOrDefault(id);
 
             if (matrix != null)
             {
@@ -139,12 +138,12 @@ namespace HCalc.WebUI.Controllers
         {
             var parts = new CalcViewModel
             {
-                Parts = _buildingPartRepository.BuildingParts,
-                DefectDescriptions = _defectDescriptionRepository.DefectDescriptions,
-                DefectImportances = _defectImportanceRepository.DefectImportances,
-                DefectIntencities = _defectIntencityRepository.DefectIntencities,
-                DefectExtents = _defectExtentRepository.DefectExtents,
-                Actions = _actionRepository.Actions
+                Parts = _buildingPartRepository.GetAll(),
+                DefectDescriptions = _defectDescriptionRepository.GetAll(),
+                DefectImportances = _defectImportanceRepository.GetAll(),
+                DefectIntencities = _defectIntencityRepository.GetAll(),
+                DefectExtents = _defectExtentRepository.GetAll(),
+                Actions = _actionRepository.GetAll()
             };
 
             // Eenh enum
@@ -166,6 +165,21 @@ namespace HCalc.WebUI.Controllers
                              };
 
             return parts;
+        }
+
+
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
         }
 
 

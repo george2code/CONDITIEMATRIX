@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using HCalc.Domain.Entities;
-using Action = HCalc.Domain.Entities.Action;
 
 namespace HCalc.WebUI.Models
 {
@@ -33,7 +32,7 @@ namespace HCalc.WebUI.Models
 
         [Display(Name = "Actie")]
         public Nullable<int> ActionId { get; set; }
-        public IEnumerable<Action> Actions { get; set; }
+        public IEnumerable<HCalc.Domain.Entities.Action> Actions { get; set; }
 
         [Display(Name = "Eenh")]
         public int EenhId { get; set; }

@@ -36,100 +36,173 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.30506.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.30506.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Unity.Mvc4">
+      <HintPath>..\packages\Unity.Mvc4.1.4.0.0\lib\net45\Unity.Mvc4.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstract\IActionRepository.cs" />
-    <Compile Include="Abstract\IBuildingPartRepository.cs" />
-    <Compile Include="Abstract\IDefectDescriptionRepository.cs" />
-    <Compile Include="Abstract\IDefectExtentRepository.cs" />
-    <Compile Include="Abstract\IDefectImportanceRepository.cs" />
-    <Compile Include="Abstract\IDefectIntencityRepository.cs" />
-    <Compile Include="Abstract\IMatrixRepository.cs" />
-    <Compile Include="Concrete\EFActionRepository.cs" />
-    <Compile Include="Concrete\EFBuildingPartRepository.cs" />
-    <Compile Include="Concrete\EFDbContext.cs" />
-    <Compile Include="Concrete\EFDefectDescriptionRepository.cs" />
-    <Compile Include="Concrete\EFDefectExtentRepository.cs" />
-    <Compile Include="Concrete\EFDefectImportanceRepository.cs" />
-    <Compile Include="Concrete\EFDefectIntencityRepository.cs" />
-    <Compile Include="Concrete\EFMatrixRepository.cs" />
-    <Compile Include="Entities\Action.cs" />
-    <Compile Include="Entities\BuildingPart.cs" />
-    <Compile Include="Entities\DefectDescription.cs" />
-    <Compile Include="Entities\DefectExtent.cs" />
-    <Compile Include="Entities\DefectImportance.cs" />
-    <Compile Include="Entities\DefectIntencity.cs" />
+    <Compile Include="BaseRepository.cs" />
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Concrete\ActionRepository.cs" />
+    <Compile Include="Concrete\BuildingPartRepository.cs" />
+    <Compile Include="Concrete\DefectDescriptionRepository.cs" />
+    <Compile Include="Concrete\DefectExtentRepository.cs" />
+    <Compile Include="Concrete\DefectImportanceRepository.cs" />
+    <Compile Include="Concrete\DefectIntencityRepository.cs" />
+    <Compile Include="Concrete\MatrixRepository.cs" />
+    <Compile Include="Concrete\UserRepository.cs" />
+    <Compile Include="Contract\IBaseRepository.cs" />
+    <Compile Include="Contract\IConnectionStringProvider.cs" />
+    <Compile Include="Contract\IDataModel.cs" />
+    <Compile Include="Contract\IDbRepository.cs" />
+    <Compile Include="Contract\IDomainModel.cs" />
+    <Compile Include="Contract\IUnitOfWork.cs" />
+    <Compile Include="Entities\Action.cs">
+      <DependentUpon>CalcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AspNetRole.cs">
+      <DependentUpon>CalcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AspNetUser.cs">
+      <DependentUpon>CalcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AspNetUserClaim.cs">
+      <DependentUpon>CalcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\AspNetUserLogin.cs">
+      <DependentUpon>CalcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\BuildingPart.cs">
+      <DependentUpon>CalcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CalcModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CalcModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CalcModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CalcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CalcModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CalcModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DefectCondition.cs">
+      <DependentUpon>CalcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DefectDescription.cs">
+      <DependentUpon>CalcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DefectExtent.cs">
+      <DependentUpon>CalcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DefectImportance.cs">
+      <DependentUpon>CalcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DefectIntencity.cs">
+      <DependentUpon>CalcModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\ExtentTable.cs" />
-    <Compile Include="Entities\Matrix.cs" />
+    <Compile Include="Entities\Matrix.cs">
+      <DependentUpon>CalcModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Enums\ImportanceType.cs" />
     <Compile Include="Enums\IntencityType.cs" />
     <Compile Include="Enums\Percent.cs" />
     <Compile Include="Enums\Eenh.cs" />
     <Compile Include="Enums\Taxe.cs" />
     <Compile Include="Logic\ConditionBuilder.cs" />
-    <Compile Include="Migrations\201411271658222_InitialCreate.cs" />
-    <Compile Include="Migrations\201411271658222_InitialCreate.Designer.cs">
-      <DependentUpon>201411271658222_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411271817530_initial.cs" />
-    <Compile Include="Migrations\201411271817530_initial.Designer.cs">
-      <DependentUpon>201411271817530_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411271907050_Extent.cs" />
-    <Compile Include="Migrations\201411271907050_Extent.Designer.cs">
-      <DependentUpon>201411271907050_Extent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411280844585_Actions.cs" />
-    <Compile Include="Migrations\201411280844585_Actions.Designer.cs">
-      <DependentUpon>201411280844585_Actions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411291602145_Matrices.cs" />
-    <Compile Include="Migrations\201411291602145_Matrices.Designer.cs">
-      <DependentUpon>201411291602145_Matrices.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201411291829555_matrix_update.cs" />
-    <Compile Include="Migrations\201411291829555_matrix_update.Designer.cs">
-      <DependentUpon>201411291829555_matrix_update.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="Entities\CalcModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CalcModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entities\CalcModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CalcModel.edmx</DependentUpon>
+      <LastGenOutput>CalcModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entities\CalcModel.edmx.diagram">
+      <DependentUpon>CalcModel.edmx</DependentUpon>
+    </None>
+    <None Include="Entities\CalcModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CalcModel.edmx</DependentUpon>
+      <LastGenOutput>CalcModel.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201411271658222_InitialCreate.resx">
-      <DependentUpon>201411271658222_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411271817530_initial.resx">
-      <DependentUpon>201411271817530_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411271907050_Extent.resx">
-      <DependentUpon>201411271907050_Extent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411280844585_Actions.resx">
-      <DependentUpon>201411280844585_Actions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411291602145_Matrices.resx">
-      <DependentUpon>201411291602145_Matrices.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201411291829555_matrix_update.resx">
-      <DependentUpon>201411291829555_matrix_update.cs</DependentUpon>
-    </EmbeddedResource>
+    <Content Include="Unity.Mvc4.README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

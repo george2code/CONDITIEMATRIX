@@ -63,3 +63,6 @@ table.matrix td a.delete { width: 24px; height: 24px;background: url("../images/
 table.matrix td.vam { vertical-align: middle;}
 
 .btncalendar { width: 24px;height: 24px;background: url("../images/ico_calendar.png") no-repeat 0 0; display: inline-block; outline: none; }
+
+.ava-image { margin: 3px 15px;}
+.ava-image img { width: 45px;height: 45px;}
