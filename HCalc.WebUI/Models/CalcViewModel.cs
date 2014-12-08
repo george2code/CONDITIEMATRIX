@@ -56,6 +56,8 @@ namespace HCalc.WebUI.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{YYYY/MM/DD}", ApplyFormatInEditMode = true)]
         public Nullable<DateTime> StartDate { get; set; }
 
+        public int StartYear { get; set; }
+
         [Display(Name = "Hvh")]
         public int Hvh { get; set; }
 

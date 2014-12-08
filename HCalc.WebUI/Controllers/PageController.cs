@@ -31,6 +31,8 @@ namespace HCalc.WebUI.Controllers
 
         private MatrixRepository _matrixRepository;
 
+        private const int PAGE_SIZE = 1;
+
         #endregion
 
         #region Properties
@@ -63,9 +65,75 @@ namespace HCalc.WebUI.Controllers
 
         //
         // GET: /Page/
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
-            return View();
+            var matrices = _matrixRepository.GetAll()
+                .OrderBy(m => m.Id)
+                .Skip((page - 1)*PAGE_SIZE)
+                .Take(PAGE_SIZE);
+
+            var matrixListViewModel = new MatrixListViewModel()
+            {
+                Matrices = new List<MatrixViewModel>(),
+                PagingInfo = new PagingInfo {
+                    CurrentPage = page,
+                    ItemsPerPage = PAGE_SIZE,
+                    TotalItems = _matrixRepository.GetAll().Count()
+                }
+            };
+
+
+            if (matrices.Any())
+            {
+                foreach (var matrix in matrices)
+                {
+                    var model = new MatrixViewModel();
+
+                    var buildingPart = (matrix.BuildingPartId.HasValue)
+                        ? _buildingPartRepository.SingleOrDefault(matrix.BuildingPartId.Value)
+                        : null;
+
+                    var defectDescription = (matrix.DefectDescriptionId.HasValue)
+                        ? _defectDescriptionRepository.SingleOrDefault(matrix.DefectDescriptionId.Value)
+                        : null;
+                        
+                    model.Id = matrix.Id;
+                    model.BuildingPartCode = (buildingPart != null) ? (double?)buildingPart.Code : null;
+                    model.BuildingPartText = (buildingPart != null) ? buildingPart.Name : null;
+
+                    model.DefectDescriptionText = (defectDescription != null) ? defectDescription.Description : null;
+
+                    model.Gebr = matrix.ImportanceId;
+                    model.Intencity = matrix.IntencityId;
+                    model.Omvang = matrix.ExtentId;
+                    model.Condition = matrix.Condition;
+
+                    if (matrix.ActieId.HasValue)
+                        model.Action = _actionRepository.SingleOrDefault(matrix.ActieId.Value).Name;
+
+                    model.CountHvh = matrix.HvhId;
+                    model.Eenh = ((Eenh) matrix.EenhId).ToString();
+                    model.Percent = matrix.Percent.HasValue ? matrix.Percent.Value.ToString() : string.Empty;
+
+                    model.Cost = matrix.Cost;
+                    model.Total = matrix.Total.HasValue ? matrix.Total.Value : 0;
+                    model.BTW = matrix.BTW;
+                    model.Cycle = matrix.Cycle;
+
+                    model.StartYear = matrix.StartYear;
+
+
+                    // render calendar cost
+                    model.CalendarBuilder = RenderCalendarCostString(model.Total, matrix.BTW, matrix.Cycle,
+                        matrix.StartYear);
+
+                    // append to list
+                    matrixListViewModel.Matrices.Add(model);
+                }
+            }
+
+
+            return View(matrixListViewModel);
         }
 
 
@@ -94,7 +162,8 @@ namespace HCalc.WebUI.Controllers
                 Total = model.Total,
                 BTW = model.TaxeId,
                 Cycle = model.Cycle,
-                StartYear = (model.StartDate.HasValue) ? model.StartDate.Value.Year : 0,
+                // StartYear = (model.StartDate.HasValue) ? model.StartDate.Value.Year : 0,    // NOT SAVING YEAR, ALWAYS 0
+                StartYear = model.StartYear,
                 UpdatedDate = DateTime.Now
             };
 
@@ -143,7 +212,8 @@ namespace HCalc.WebUI.Controllers
                 DefectImportances = _defectImportanceRepository.GetAll(),
                 DefectIntencities = _defectIntencityRepository.GetAll(),
                 DefectExtents = _defectExtentRepository.GetAll(),
-                Actions = _actionRepository.GetAll()
+                Actions = _actionRepository.GetAll(),
+                StartYear = 2014
             };
 
             // Eenh enum
@@ -203,7 +273,7 @@ namespace HCalc.WebUI.Controllers
         public string GetCalendarCostList(int total, int taxe, int cycle, int year)
         {
             var sb = new StringBuilder();
-            var yearCost = Convert.ToInt32(total/taxe*100) + total;
+            var yearCost = Convert.ToInt32(total*taxe/100) + total;
             int nextYear = year;
 
             if (cycle == 99)
@@ -227,6 +297,33 @@ namespace HCalc.WebUI.Controllers
             }
 
             return sb.ToString();
+        }
+
+
+        private string RenderCalendarCostString(int total, int taxe, int cycle, int year)
+        {
+            var sb = new StringBuilder();
+            var yearCost = Convert.ToInt32(total * taxe / 100) + total;
+            int nextYear = year;
+
+            for (int i = 0; i < cycle; i++)
+            {
+                if (i > 0) {
+                    nextYear += cycle;
+                }
+
+                sb.AppendFormat("{0} - &euro;{1}, ",
+                    nextYear,
+                    yearCost);
+
+                if (cycle == 99)
+                    break;
+            }
+
+
+            var result = sb.ToString();
+            var index = result.LastIndexOf(", ");
+            return result.Remove(index);
         }
 
         #endregion

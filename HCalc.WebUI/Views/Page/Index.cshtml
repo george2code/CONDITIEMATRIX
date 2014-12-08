@@ -1,4 +1,7 @@
-﻿@{
+﻿@using HCalc.WebUI.HtmlHelpers
+@model HCalc.WebUI.Models.MatrixListViewModel
+
+@{
     ViewBag.Title = "Welcome";
 }
 
@@ -44,30 +47,32 @@
                     <th>Cal</th>
                     <th></th>
                 </tr>
-
-                @for (var i = 0; i < 10; i++)
+                
+                @foreach (var modelItem in Model.Matrices)
                 {
-                    <tr>
-                        <td class="vam"><span class="label label-success">31.39</span></td>
-                        <td class="vam"><a href="/page/edit/1">Dakaansluiting; loodslab tpv gevel en dakkapel</a></td>
-                        <td>Roestvorming bouten droogrekken</td>
-                        <td class="gr text-center">5</td>
-                        <td class="gr text-center">2</td>
-                        <td class="gr text-center">2</td>
-                        <td class="yl text-center">2</td>
-                        <td class="gr">Onderhoud bevestiging</td>
-                        <td class="gr text-center">23</td>
-                        <td class="text-center">m2</td>
-                        <td class="text-center">1</td>
-                        <td class="yl text-center">&euro; 30</td>
-                        <td class="text-center">&euro; 690</td>
-                        <td class="text-center">3</td>
-                        <td class="text-center">2014</td>
-                        <td class="text-center">19</td>
+                     <tr>
+                        <td class="vam"><span class="label label-success">@modelItem.BuildingPartCode</span></td>
+                        <td class="vam"><a href="/page/edit/@modelItem.Id">@modelItem.BuildingPartText</a></td>
+                         <td>@modelItem.DefectDescriptionText</td>
+
+                        <td class="gr text-center">@modelItem.Gebr</td>
+                        <td class="gr text-center">@modelItem.Intencity</td>
+                        <td class="gr text-center">@modelItem.Omvang</td>
+                         <td class="yl text-center">@modelItem.Condition</td>
+
+                        <td class="gr">@modelItem.Action</td>
+                        <td class="gr text-center">@modelItem.CountHvh</td>
+                        <td class="text-center">@modelItem.Eenh</td>
+                        <td class="text-center">@modelItem.Percent</td>
+                        <td class="yl text-center">&euro; @modelItem.Cost</td>
+                        <td class="text-center">&euro; @modelItem.Total</td>
+                         <td class="text-center">@modelItem.Cycle</td>
+                        <td class="text-center">@modelItem.StartYear</td>
+                        <td class="text-center">@modelItem.BTW</td>
                         <td class="vam">
                             <a href="javascript:void(0);" class="btncalendar" data-toggle="popover" title="Years cost"
                                data-placement="left"
-                               data-content="2014 - &euro;1600, 2017 - &euro;1600"></a>
+                               data-content="@Html.Raw(modelItem.CalendarBuilder)"></a>
                         </td>
                         <td class="text-center vam"><a class="delete" href="#" title="Remove" data-toggle="modal" data-target="#myModal"></a></td>
                     </tr>
@@ -81,13 +86,7 @@
     <div class="col-sm-12">
         <nav>
             <ul class="pagination pull-right">
-                <li><a href="#"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
+                @Html.PageLinks(Model.PagingInfo, x => Url.Action("Index", new { page = x }))
             </ul>
         </nav>
     </div>

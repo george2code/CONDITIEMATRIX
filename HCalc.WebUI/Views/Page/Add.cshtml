@@ -146,9 +146,11 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.StartDate, new { @class = "col-sm-4 control-label" })
+                <label class="col-sm-4 control-label" for="Startjaar">Startjaar</label>
                 <div class='col-sm-6'>
                     <div class="input-append date input-group" id="dpYears" data-date="102/2014" data-date-format=" yyyy" data-date-viewmode="years" data-date-minviewmode="years">
-                        @Html.TextBoxFor(m => m.StartDate, new { @class = "span2 form-control", @size = "16", @value = "2014" })
+                        <input type="text" id="Startjaar" class="span2 form-control" size="16" value="2014" />
+                        @Html.HiddenFor(m => m.StartYear)
                         <span class="add-on input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                     </div>
                 </div>
@@ -229,6 +231,8 @@
         $('#dpYears').datepicker().on('changeDate', function (ev) {
 
             $(".dropdown-menu").hide();
+
+            $("#StartYear").val(parseInt(ev.date.getFullYear()));
 
             if ($("#Total").val() != "0") {
                 var url = "/Page/GetCalendarCostList";
