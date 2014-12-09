@@ -20,7 +20,7 @@
                     <a href="#" class="navbar-brand">Demo version</a>
                 </div>
                 <div id="bs-example-navbar-collapse-3" class="collapse navbar-collapse pull-right">
-                    <button class="btn btn-primary navbar-btn" type="button" onclick="window.location = '/Page/Add';">Add new</button>
+                    <button class="btn btn-primary navbar-btn" type="button" onclick="window.location = '/page/add';">Add new</button>
                 </div>
             </div>
         </nav>
@@ -74,7 +74,7 @@
                                data-placement="left"
                                data-content="@Html.Raw(modelItem.CalendarBuilder)"></a>
                         </td>
-                        <td class="text-center vam"><a class="delete" href="#" title="Remove" data-toggle="modal" data-target="#myModal"></a></td>
+                        <td class="text-center vam"><a class="delete" href="#" title="Remove" data-toggle="modal" data-target="#myModal">@modelItem.Id</a></td>
                     </tr>
                 }
             </table>
@@ -105,6 +105,7 @@
                 Are your sure you want to remove this matrix item? Press 'Delete' to apply, 'Close' - to cancel.
             </div>
             <div class="modal-footer">
+                <input type="hidden" id="current-id" value="" />
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-danger">Delete</button>
             </div>
@@ -113,17 +114,30 @@
 </div>
 
 
-
 <script type="text/javascript">
     $(document).ready(function() {
 
         $(".matrix td a.delete").bind("click", function(event) {
             event.preventDefault();
+            $("#current-id").val($(this).text());
         });
 
-        $("#myModal .btn-danger").bind("click", function(event) {
-            location.reload();
+
+        $("#myModal .btn-danger").bind("click", function (event)
+        {
+            // get id of deleted item
+            var indx = ($(this).parent().find("#current-id")).val();
+
+            // delete item via ajax
+            var url = "/Page/DeleteCondition";
+            $.get(url, {
+                id: indx
+            }, function (data) {
+                // reload page
+                window.location = "/";
+            });
         });
+
 
         $('[data-toggle="popover"]').popover();
 

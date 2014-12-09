@@ -31,7 +31,7 @@ namespace HCalc.WebUI.Controllers
 
         private MatrixRepository _matrixRepository;
 
-        private const int PAGE_SIZE = 1;
+        private const int PAGE_SIZE = 10;
 
         #endregion
 
@@ -68,7 +68,7 @@ namespace HCalc.WebUI.Controllers
         public ActionResult Index(int page = 1)
         {
             var matrices = _matrixRepository.GetAll()
-                .OrderBy(m => m.Id)
+                .OrderByDescending(m => m.Id)
                 .Skip((page - 1)*PAGE_SIZE)
                 .Take(PAGE_SIZE);
 
@@ -146,35 +146,40 @@ namespace HCalc.WebUI.Controllers
         [HttpPost]
         public ActionResult Add(CalcViewModel model)
         {
-            var newItem = new Matrix()
+            if (ModelState.IsValid)
             {
-                BuildingPartId = model.BuildingPartsId,
-                DefectDescriptionId = model.DefectDescriptionsId,
-                ImportanceId = model.DefectImportancesId,
-                IntencityId = model.DefectIntencitiesId,
-                ExtentId = model.DefectExtentsId,
-                Condition = model.Condition,
-                ActieId = model.ActionId,
-                HvhId = model.Hvh,
-                EenhId = model.EenhId,
-                Percent = (model.Percent == 0) ? 1 : (float)0.2,
-                Cost = model.Cost,
-                Total = model.Total,
-                BTW = model.TaxeId,
-                Cycle = model.Cycle,
-                // StartYear = (model.StartDate.HasValue) ? model.StartDate.Value.Year : 0,    // NOT SAVING YEAR, ALWAYS 0
-                StartYear = model.StartYear,
-                UpdatedDate = DateTime.Now
-            };
+                var newItem = new Matrix()
+                {
+                    BuildingPartId = model.BuildingPartsId,
+                    DefectDescriptionId = model.DefectDescriptionsId,
+                    ImportanceId = model.DefectImportancesId,
+                    IntencityId = model.DefectIntencitiesId,
+                    ExtentId = model.DefectExtentsId,
+                    Condition = model.Condition,
+                    ActieId = model.ActionId,
+                    HvhId = model.Hvh,
+                    EenhId = model.EenhId,
+                    Percent = (model.Percent == 0) ? 1 : (float) 0.2,
+                    Cost = model.Cost,
+                    Total = model.Total,
+                    BTW = model.TaxeId,
+                    Cycle = model.Cycle,
+                    StartYear = model.StartYear,
+                    UpdatedDate = DateTime.Now
+                };
 
-             // insert
-             _matrixRepository.Insert(newItem);
+                // insert
+                _matrixRepository.Insert(newItem);
 
-             // redirect
-             return RedirectToAction("Index", "Page");
+                // redirect
+                return RedirectToAction("Index", "Page");
+            }
+
+            model = updateCalcViewModel(model);
+            return View(model);
         }
 
-
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             var matrix = _matrixRepository.SingleOrDefault(id);
@@ -183,17 +188,28 @@ namespace HCalc.WebUI.Controllers
             {
                 var model = InitCalcViewModel();
 
+                model.Id = id;
+
                 model.BuildingPartsId = matrix.BuildingPartId;
                 model.DefectDescriptionsId = matrix.DefectDescriptionId;
                 model.DefectImportancesId = matrix.ImportanceId;
                 model.DefectIntencitiesId = matrix.IntencityId;
                 model.DefectExtentsId = matrix.ExtentId;
+                model.Condition = matrix.Condition;
                 model.ActionId = matrix.ActieId;
 
-                //TODO: check that all params has been assigned
+                model.Hvh = matrix.HvhId;
                 model.EenhId = matrix.EenhId;
+                model.Percent = (matrix.Percent == 1) ? 0 : 1;
+                model.Cost = matrix.Cost;
+               
+                if (matrix.Total.HasValue)
+                 model.Total = matrix.Total.Value;
+
+                //TODO: check that all params has been assigned
                 model.TaxeId = matrix.BTW;
-                model.StartDate = new DateTime(matrix.StartYear, DateTime.Now.Month, 1);
+                model.Cycle = matrix.Cycle;
+                model.StartYear = matrix.StartYear;
 
                 return View(model);
             }
@@ -202,39 +218,43 @@ namespace HCalc.WebUI.Controllers
         }
 
 
-
-        private CalcViewModel InitCalcViewModel()
+        [HttpPost]
+        public ActionResult Edit(CalcViewModel model)
         {
-            var parts = new CalcViewModel
+            model = updateCalcViewModel(model);
+
+            if (ModelState.IsValid)
             {
-                Parts = _buildingPartRepository.GetAll(),
-                DefectDescriptions = _defectDescriptionRepository.GetAll(),
-                DefectImportances = _defectImportanceRepository.GetAll(),
-                DefectIntencities = _defectIntencityRepository.GetAll(),
-                DefectExtents = _defectExtentRepository.GetAll(),
-                Actions = _actionRepository.GetAll(),
-                StartYear = 2014
-            };
+                var matrixEntity = new Matrix()
+                {
+                    Id =  model.Id,
+                    BuildingPartId = model.BuildingPartsId,
+                    DefectDescriptionId = model.DefectDescriptionsId,
+                    ImportanceId = model.DefectImportancesId,
+                    IntencityId = model.DefectIntencitiesId,
+                    ExtentId = model.DefectExtentsId,
+                    Condition = model.Condition,
+                    ActieId = model.ActionId,
 
-            // Eenh enum
-            IEnumerable<Eenh> eenhsTypes = Enum.GetValues(typeof(Eenh)).Cast<Eenh>();
-            parts.EenhList = from eenh in eenhsTypes
-                             select new SelectListItem
-                             {
-                                 Text = eenh.ToString(),
-                                 Value = ((int)eenh).ToString()
-                             };
+                    HvhId = model.Hvh,
+                    EenhId = model.EenhId,
+                    Percent = (model.Percent == 0) ? 1 : (float)0.2,
+                    Cost = model.Cost,
+                    Total = model.Total,
+                    BTW = model.TaxeId,
+                    Cycle = model.Cycle,
+                    StartYear = model.StartYear,
+                    UpdatedDate = DateTime.Now
+                };
 
-            // Taxes enum
-            IEnumerable<Taxe> taxeTypes = Enum.GetValues(typeof(Taxe)).Cast<Taxe>();
-            parts.TaxeList = from taxe in taxeTypes
-                             select new SelectListItem
-                             {
-                                 Text = taxe.ToString(),
-                                 Value = ((int)taxe).ToString()
-                             };
+                // update
+                _matrixRepository.Update(matrixEntity);
 
-            return parts;
+                // back to home page
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
         }
 
 
@@ -254,6 +274,16 @@ namespace HCalc.WebUI.Controllers
 
 
         #region Ajax calls
+
+        [HttpGet]
+        public void DeleteCondition(int id)
+        {
+            var entity = _matrixRepository.SingleOrDefault(id);
+            if (entity != null)
+            {
+                _matrixRepository.Delete(entity);
+            }
+        }
 
         [HttpGet]
         public string GetCondition(int extent, int intencity, int importance)
@@ -299,7 +329,9 @@ namespace HCalc.WebUI.Controllers
             return sb.ToString();
         }
 
+        #endregion
 
+        #region Methods
         private string RenderCalendarCostString(int total, int taxe, int cycle, int year)
         {
             var sb = new StringBuilder();
@@ -308,7 +340,8 @@ namespace HCalc.WebUI.Controllers
 
             for (int i = 0; i < cycle; i++)
             {
-                if (i > 0) {
+                if (i > 0)
+                {
                     nextYear += cycle;
                 }
 
@@ -324,6 +357,69 @@ namespace HCalc.WebUI.Controllers
             var result = sb.ToString();
             var index = result.LastIndexOf(", ");
             return result.Remove(index);
+        }
+
+        private CalcViewModel InitCalcViewModel()
+        {
+            var parts = new CalcViewModel {
+                Parts = _buildingPartRepository.GetAll(),
+                DefectDescriptions = _defectDescriptionRepository.GetAll(),
+                DefectImportances = _defectImportanceRepository.GetAll(),
+                DefectIntencities = _defectIntencityRepository.GetAll(),
+                DefectExtents = _defectExtentRepository.GetAll(),
+                Actions = _actionRepository.GetAll(),
+                StartYear = 2014
+            };
+
+            // Eenh enum
+            IEnumerable<Eenh> eenhsTypes = Enum.GetValues(typeof(Eenh)).Cast<Eenh>();
+            parts.EenhList = from eenh in eenhsTypes
+                             select new SelectListItem
+                             {
+                                 Text = eenh.ToString(),
+                                 Value = ((int)eenh).ToString()
+                             };
+
+            // Taxes enum
+            IEnumerable<Taxe> taxeTypes = Enum.GetValues(typeof(Taxe)).Cast<Taxe>();
+            parts.TaxeList = from taxe in taxeTypes
+                             select new SelectListItem
+                             {
+                                 Text = taxe.ToString(),
+                                 Value = ((int)taxe).ToString()
+                             };
+
+            return parts;
+        }
+
+        private CalcViewModel updateCalcViewModel(CalcViewModel model)
+        {
+            model.Parts = _buildingPartRepository.GetAll();
+            model.DefectDescriptions = _defectDescriptionRepository.GetAll();
+            model.DefectImportances = _defectImportanceRepository.GetAll();
+            model.DefectIntencities = _defectIntencityRepository.GetAll();
+            model.DefectExtents = _defectExtentRepository.GetAll();
+            model.Actions = _actionRepository.GetAll();
+
+            // Eenh enum
+            IEnumerable<Eenh> eenhsTypes = Enum.GetValues(typeof(Eenh)).Cast<Eenh>();
+            model.EenhList = from eenh in eenhsTypes
+                             select new SelectListItem
+                             {
+                                 Text = eenh.ToString(),
+                                 Value = ((int)eenh).ToString()
+                             };
+
+            // Taxes enum
+            IEnumerable<Taxe> taxeTypes = Enum.GetValues(typeof(Taxe)).Cast<Taxe>();
+            model.TaxeList = from taxe in taxeTypes
+                             select new SelectListItem
+                             {
+                                 Text = taxe.ToString(),
+                                 Value = ((int)taxe).ToString()
+                             };
+
+            return model;
         }
 
         #endregion

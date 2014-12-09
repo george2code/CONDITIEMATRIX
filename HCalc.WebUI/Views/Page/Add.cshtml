@@ -35,6 +35,7 @@
                 @Html.LabelFor(model => model.DefectImportancesId, new { @class = "col-sm-4 control-label" })
                 <div class="col-sm-8">
                     @Html.DropDownListFor(model => model.DefectImportancesId, new SelectList(Model.DefectImportances, "Id", "ImportanceName"), "- Gebr -", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DefectImportancesId)
                 </div>
             </div>
 
@@ -42,6 +43,7 @@
                 @Html.LabelFor(model => model.DefectIntencitiesId, new { @class = "col-sm-4 control-label" })
                 <div class="col-sm-8">
                     @Html.DropDownListFor(model => model.DefectIntencitiesId, new SelectList(Model.DefectIntencities, "Id", "IntencityName"), "- Int -", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DefectIntencitiesId)
                 </div>
             </div>
 
@@ -49,6 +51,7 @@
                 @Html.LabelFor(model => model.DefectExtentsId, new { @class = "col-sm-4 control-label" })
                 <div class="col-sm-8">
                     @Html.DropDownListFor(model => model.DefectExtentsId, new SelectList(Model.DefectExtents, "Id", "ExtentName"), "- OMVANG -", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DefectExtentsId)
                 </div>
             </div>
 
@@ -75,6 +78,7 @@
                 @Html.LabelFor(model => model.Hvh, new { @class = "col-sm-4 control-label" })
                 <div class="col-sm-8">
                     @Html.TextBoxFor(m => m.Hvh)
+                    @Html.ValidationMessageFor(m => m.Hvh)
                 </div>
             </div>
 
@@ -104,6 +108,7 @@
                 @Html.LabelFor(model => model.Cost, new { @class = "col-sm-4 control-label" })
                 <div class="col-sm-8">
                     @Html.TextBoxFor(m => Model.Cost, new { @class = "form-control", @placeholder = "€" })
+                    @Html.ValidationMessageFor(m => m.Cost)
                 </div>
             </div>
 
@@ -146,7 +151,6 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.StartDate, new { @class = "col-sm-4 control-label" })
-                <label class="col-sm-4 control-label" for="Startjaar">Startjaar</label>
                 <div class='col-sm-6'>
                     <div class="input-append date input-group" id="dpYears" data-date="102/2014" data-date-format=" yyyy" data-date-viewmode="years" data-date-minviewmode="years">
                         <input type="text" id="Startjaar" class="span2 form-control" size="16" value="2014" />
@@ -184,24 +188,11 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-
-        // check condition on page load
-
-
-
         // get condition
         $("#DefectImportancesId, #DefectIntencitiesId, #DefectExtentsId").change(function () {
-            if ($("#DefectImportancesId").val() != "" && $("#DefectIntencitiesId").val() != "" && $("#DefectExtentsId").val() != "") {
-                var url = "/Page/GetCondition";
-
-                $.get(url, {
-                    extent: $("#DefectExtentsId").val(),
-                    intencity: $("#DefectIntencitiesId").val(),
-                    importance: $("#DefectImportancesId").val()
-                }, function (data) {
-                    $("#Cond").html(data);
-                    $("#Condition").val(data);
-                });
+            if ($("#DefectImportancesId").val() != "" && $("#DefectIntencitiesId").val() != ""
+                && $("#DefectExtentsId").val() != "") {
+                updateCondition();
             } else {
                 $("#Cond").html("-");
                 $("#Condition").val(0);
@@ -211,16 +202,7 @@
         // get Total without taxes
         $("#Hvh, #Percent, #Cost").change(function () {
             if ($("#Hvh").val() != "0" && $("#Cost").val() != "0") {
-                var url = "/Page/GetTotalCost";
-
-                $.get(url, {
-                    count: $("#Hvh").val(),
-                    percentId: $("#Percent").val(),
-                    cost: $("#Cost").val()
-                }, function (data) {
-                    $("#TotalCost").html(data + " &euro;");
-                    $("#Total").val(data);
-                });
+                updateTotalCost();
             } else {
                 $("#TotalCost").html("-");
                 $("#Total").val(0);
@@ -229,23 +211,10 @@
 
 
         $('#dpYears').datepicker().on('changeDate', function (ev) {
-
             $(".dropdown-menu").hide();
-
             $("#StartYear").val(parseInt(ev.date.getFullYear()));
-
-            if ($("#Total").val() != "0") {
-                var url = "/Page/GetCalendarCostList";
-
-                $.get(url, {
-                    total: $("#Total").val(),
-                    taxe: $("#TaxeId").val(),
-                    cycle: $("#Cycle").val(),
-                    year: ev.date.getFullYear()
-                }, function (data) {
-                    $("ul.calendar").html(data);
-                });
-            }
+            // reload
+            reloadCalculator();
         });
 
 
@@ -253,9 +222,9 @@
         $("#Total, #TaxeId, #Cycle, #StartDate").change(function () {
             // Total - 0
             // StartDate - get year
-
-            var date = $(this).datepicker('getDate');
-            alert(date);
+            $(".datepicker.dropdown-menu").hide();
+            // reload
+            reloadCalculator();
         });
 
     });

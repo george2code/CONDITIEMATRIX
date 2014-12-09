@@ -8,6 +8,8 @@ namespace HCalc.WebUI.Models
 {
     public class CalcViewModel
     {
+        public int Id { get; set; }
+
         [Display(Name = "Bouwdeel / onderdeel")]
         public Nullable<int> BuildingPartsId { get; set; }
         public IEnumerable<BuildingPart> Parts { get; set; }
@@ -18,6 +20,7 @@ namespace HCalc.WebUI.Models
 
 
         // Importance
+        [Required]
         [Display(Name = " Importance (Gebr)")]
         public int DefectImportancesId { get; set; }
         public IEnumerable<DefectImportance> DefectImportances { get; set; }
@@ -47,21 +50,23 @@ namespace HCalc.WebUI.Models
 
 
         [Display(Name = "Kosten")]
+        [Range(1, int.MaxValue, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
         public int Cost { get; set; }
 
         [Display(Name = "Cycle")]
         public int Cycle { get; set; }
 
-        [Display(Name = "Startjaar")]
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{YYYY/MM/DD}", ApplyFormatInEditMode = true)]
-        public Nullable<DateTime> StartDate { get; set; }
+        [Display(Name = "Startjaar1")]
+        public string StartDate { get; set; }
 
         public int StartYear { get; set; }
 
+
         [Display(Name = "Hvh")]
+        [Range(1, 999, ErrorMessage = "Value for {0} must be between {1} and {2}.")]
         public int Hvh { get; set; }
 
-        public int Condition { get; set; }
+        public int Condition { get; set; }  
 
         public int Total { get; set; }
     }

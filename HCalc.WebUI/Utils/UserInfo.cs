@@ -27,7 +27,7 @@
             }
 
             return string.Format("<img class=\"img-circle\" src=\"/Images/avatar/{0}\" alt=\"{1}\" />",
-                    "Koala.jpg",
+                    "worker.jpg",
                     Email);
         }
     }
